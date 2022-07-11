@@ -29,11 +29,10 @@
   const select = (obj: Selection) => () => {
     inputValue = "";
 
-    if (!selected.includes(obj)) {
+    if (!selected.includes(obj))
       selected = [...selected, obj];
-    } else {
+    else
       selected = selected.filter(x => x !== obj);
-    }
   };
 
   const onDropdownKeyDown = (obj: Selection) => (event: KeyboardEvent) => {
@@ -79,9 +78,10 @@
 
       case Key.ArrowDown:
         event.preventDefault();
-        if (document.activeElement === inputNode) {
+
+        if (document.activeElement === inputNode)
           (dropdownNode.firstElementChild as HTMLElement).focus();
-        }
+
         break;
     }
   }
@@ -92,6 +92,9 @@
   }
 
   function getOrdinal(num: number): string {
+    if (num === 11 || num === 12 || num === 13)
+      return "th";
+
     switch (num % 10) {
       case 1:
         return "st";
@@ -105,9 +108,8 @@
   }
 
   function getUnderlined(str: string): string {
-    if (inputValue.length === 0) {
+    if (inputValue.length === 0)
       return str;
-    }
 
     // Input is already filtered, index should be found
     // TODO string.indexOf() doesn't work on Chrome (Android)
@@ -119,6 +121,8 @@
 
     return `${before}<u>${middle}</u>${after}`;
   }
+
+  // TODO cache selected.indexOf(option)
 </script>
 
 <div
@@ -171,7 +175,7 @@
         {#each filtered as option (option.id)}
           <li
             tabindex="0"
-            on:click={select(option)}
+            on:click|stopPropagation={select(option)}
             on:keydown={onDropdownKeyDown(option)}
             class:selected={selected.includes(option)}
           >
