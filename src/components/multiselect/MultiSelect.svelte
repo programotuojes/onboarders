@@ -1,3 +1,7 @@
+<script context="module" lang="ts">
+  let count: number = 0;
+</script>
+
 <script lang="ts">
   import { fly } from "svelte/transition";
   import { outClick, outFocus } from "./actions.ts";
@@ -21,6 +25,7 @@
   let inputNode: HTMLInputElement;
   let dropdownNode: HTMLElement;
   let focused: boolean = false;
+  const inputId: string = `multiselect-${count++}`;
 
   $: filtered = data.filter(x => inputValue
     ? x[displayProp].toLowerCase().includes(inputValue.toLowerCase())
@@ -143,14 +148,14 @@
       autocomplete="off"
       bind:this={inputNode}
       bind:value={inputValue}
-      id={label}
+      id={inputId}
       on:focus={() => focused = true}
       placeholder=" "
     >
 
     <label
       class:something-selected={focused || selected.length > 0}
-      for={label}
+      for={inputId}
     >
       {label}
     </label>

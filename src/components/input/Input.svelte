@@ -1,3 +1,7 @@
+<script context="module" lang="ts">
+  let count: number = 0;
+</script>
+
 <script lang="ts">
   import { onMount } from "svelte";
   import type { InputType } from "./Input.d.ts";
@@ -10,8 +14,9 @@
   export let min: string | undefined = undefined;
   export let max: string | undefined = undefined;
   export let style: string = "";
-
   export let inputNode: HTMLInputElement | undefined = undefined;
+
+  const inputId: string = `input-${count++}`;
 
   $: canAdd = type !== "number" || max === undefined || value < parseInt(max);
   $: canSubtract = type !== "number" || min === undefined || value > parseInt(min);
@@ -32,13 +37,13 @@
     autocomplete="off"
     bind:this={inputNode}
     bind:value
-    id={label}
+    id={inputId}
     placeholder=" "
     required
     {style}
   >
 
-  <label for={label}>{label}</label>
+  <label for={inputId}>{label}</label>
 
   {#if type === "number"}
     <div class="arrows">
@@ -48,7 +53,6 @@
       >
         <svg
           fill="currentColor"
-          class="bi bi-caret-up-fill"
           viewBox="0 0 16 16"
         >
           <path
