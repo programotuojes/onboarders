@@ -30,7 +30,8 @@
 <Teams />
 <Onboarders />
 
-<select bind:value on:change={changeTheme}>
+<label for="theme">Theme:</label>
+<select bind:value id="theme" on:change={changeTheme}>
   <option value="auto">Auto</option>
   <option value="light">Light</option>
   <option value="dark">Dark</option>
@@ -38,10 +39,18 @@
 
 <style>
 
-  select {
+  label {
+    bottom: 2rem;
     left: 0;
+    margin: 1rem;
     position: fixed;
-    top: 0;
+  }
+
+  select {
+    bottom: 0;
+    left: 0;
+    margin: 1rem;
+    position: fixed;
   }
 
 </style>
