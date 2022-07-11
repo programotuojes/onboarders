@@ -4,6 +4,12 @@
   --box-shadow: 0 3px 6px 0 rgb(0 0 0 / 0.15);
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #444444;
+  }
+}
+
 /* TODO remove bottom padding */
 body {
   margin: 0;
@@ -17,15 +23,15 @@ button {
   min-width: 4rem;
 
   transition: background-color 100ms ease-in;
-}
 
-button:hover {
-  background-color: darkgray;
-  cursor: pointer;
-}
+  &:hover {
+    background-color: darkgray;
+    cursor: pointer;
+  }
 
-button:active {
-  background-color: gray;
+  &:active {
+    background-color: gray;
+  }
 }
 
 /* To remove arrows from number inputs */
