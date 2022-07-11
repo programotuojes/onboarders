@@ -47,8 +47,6 @@
         class:disabled={!canAdd}
       >
         <svg
-          width="12"
-          height="12"
           fill="currentColor"
           class="bi bi-caret-up-fill"
           viewBox="0 0 16 16"
@@ -63,8 +61,6 @@
         class:disabled={!canSubtract}
       >
         <svg
-          width="12"
-          height="12"
           fill="currentColor"
           viewBox="0 0 16 16"
         >
@@ -155,6 +151,11 @@
 
     & div:first-child { border-top-right-radius: var(--border-radius); }
     & div:last-child { border-bottom-right-radius: var(--border-radius); }
+  }
+
+  svg {
+    height: 1em;
+    width: 1em;
   }
 
 </style>
