@@ -85,9 +85,8 @@
     left: 0.85rem;
     position: absolute;
     top: 0.7rem;
-    transition-duration: 175ms;
-    transition-property: left, top, font-size;
-    transition-timing-function: ease-in-out;
+    transform-origin: left;
+    transition: transform ease-in-out 175ms;
     user-select: none;
   }
 
@@ -95,8 +94,6 @@
     border: var(--border);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    font-family: inherit;
-    font-size: inherit;
     height: 2.5rem;
     outline-style: none;
     padding: 0.25rem 0.75rem;
@@ -108,9 +105,7 @@
 
     &:focus ~ label,
     &:not(:placeholder-shown) ~ label {
-      font-size: 0.8rem;
-      left: 0;
-      top: -1.2rem;
+      transform: translateX(-0.85rem) translateY(-2rem) scale(0.8);
     }
   }
 

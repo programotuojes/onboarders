@@ -227,16 +227,13 @@
     left: 0.75rem;
     position: absolute;
     top: 0.6rem;
-    transition-duration: 175ms;
-    transition-property: left, top, font-size;
-    transition-timing-function: ease-in-out;
+    transform-origin: left;
+    transition: transform ease-in-out 175ms;
     user-select: none;
   }
 
   input {
     border: none;
-    font-family: inherit;
-    font-size: inherit;
     padding: 0;
     width: 100%;
 
@@ -245,9 +242,7 @@
     & ~ label.something-selected,
     &:not(:placeholder-shown) ~ label {
       cursor: default;
-      font-size: 0.8rem;
-      left: 0;
-      top: -1.3rem;
+      transform: translateX(-0.85rem) translateY(-2rem) scale(0.8);
     }
   }
 
