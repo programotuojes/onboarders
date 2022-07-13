@@ -39,14 +39,13 @@
   function onRootKeyDown(event: KeyboardEvent) {
     switch (event.key) {
       case Key.Enter:
-        if (inputValue.length > 0) {
-          if (filtered.length === 1) {
-            event.preventDefault();
-            select(filtered[0])();
-          } else {
-            inputValue = "";
-          }
+        if (inputValue.length === 0 || filtered.length !== 1) {
+          inputValue = "";
+          break;
         }
+
+        event.preventDefault();
+        select(filtered[0])();
         break;
 
       case Key.ArrowDown:
@@ -144,6 +143,8 @@
 
     return ` (${index}${postfix})`;
   }
+
+  // TODO on:click|stopPropagation doesn't remove focus from li on desktop
 </script>
 
 <div
