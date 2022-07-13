@@ -31,6 +31,34 @@
     ? x[displayProp].toLowerCase().includes(inputValue.toLowerCase())
     : x);
 
+  function onRootClick() {
+    focused = true;
+    inputNode.focus();
+  }
+
+  function onRootKeyDown(event: KeyboardEvent) {
+    switch (event.key) {
+      case Key.Enter:
+        if (inputValue.length > 0) {
+          if (filtered.length === 1) {
+            event.preventDefault();
+            select(filtered[0])();
+          } else {
+            inputValue = "";
+          }
+        }
+        break;
+
+      case Key.ArrowDown:
+        event.preventDefault();
+
+        if (document.activeElement === inputNode)
+          (dropdownNode.firstElementChild as HTMLElement).focus();
+
+        break;
+    }
+  }
+
   const select = (obj: Selection) => () => {
     inputValue = "";
 
@@ -38,6 +66,9 @@
       selected = [...selected, obj];
     else
       selected = selected.filter(x => x !== obj);
+
+    // Rerender filtered array to show selected position
+    data = data;
   };
 
   const onDropdownKeyDown = (obj: Selection) => (event: KeyboardEvent) => {
@@ -68,50 +99,6 @@
     }
   };
 
-  function onRootKeyDown(event: KeyboardEvent) {
-    switch (event.key) {
-      case Key.Enter:
-        if (inputValue.length > 0) {
-          if (filtered.length === 1) {
-            event.preventDefault();
-            select(filtered[0])();
-          } else {
-            inputValue = "";
-          }
-        }
-        break;
-
-      case Key.ArrowDown:
-        event.preventDefault();
-
-        if (document.activeElement === inputNode)
-          (dropdownNode.firstElementChild as HTMLElement).focus();
-
-        break;
-    }
-  }
-
-  function onRootClick() {
-    focused = true;
-    inputNode.focus();
-  }
-
-  function getOrdinal(num: number): string {
-    if (num === 11 || num === 12 || num === 13)
-      return "th";
-
-    switch (num % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  }
-
   function getUnderlined(str: string): string {
     if (inputValue.length === 0)
       return str;
@@ -127,7 +114,36 @@
     return `${before}<u>${middle}</u>${after}`;
   }
 
-  // TODO cache selected.indexOf(option)
+  function getOrdinal(obj: Selection): string {
+    const index = selected.indexOf(obj) + 1;
+
+    if (index === 0)
+      return "";
+
+    let postfix: string;
+
+    switch (index % 10) {
+      case 1:
+        postfix = "st";
+        break;
+
+      case 2:
+        postfix = "nd";
+        break;
+
+      case 3:
+        postfix = "rd";
+        break;
+
+      default:
+        postfix = "th";
+    }
+
+    if (index === 11 || index === 12 || index === 13)
+      postfix = "th";
+
+    return ` (${index}${postfix})`;
+  }
 </script>
 
 <div
@@ -161,7 +177,7 @@
     </label>
 
     <svg
-      class:activated={focused}
+      class:dropdown-shown={focused}
       fill="none"
       on:click|stopPropagation={() => focused = !focused}
       stroke-width="2"
@@ -184,10 +200,7 @@
             on:keydown={onDropdownKeyDown(option)}
             class:selected={selected.includes(option)}
           >
-            {@html getUnderlined(option[displayProp])}
-            {#if selected.indexOf(option) !== -1}
-              ({selected.indexOf(option) + 1 + getOrdinal(selected.indexOf(option) + 1)})
-            {/if}
+            {@html getUnderlined(option[displayProp])}{getOrdinal(option)}
           </li>
         {/each}
       {/if}
@@ -291,7 +304,7 @@
     min-width: 1rem;
     transition: transform 250ms linear;
 
-    &.activated { transform: rotateZ(180deg); }
+    &.dropdown-shown { transform: rotateZ(180deg); }
   }
 
 </style>
