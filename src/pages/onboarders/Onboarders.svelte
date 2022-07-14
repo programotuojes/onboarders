@@ -4,8 +4,8 @@
   import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
   import type { Column } from "../../components/table/Table.d.ts";
   import Table from "../../components/table/Table.svelte";
-  import { teams } from "../team/store.ts";
-  import type { Team } from "../team/Team.d.ts";
+  import { teams } from "../teams/store.ts";
+  import type { Team } from "../teams/Team.d.ts";
   import type { Onboarder } from "./Onboarder.d.ts";
 
 

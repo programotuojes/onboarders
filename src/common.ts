@@ -1,5 +1,5 @@
-import type { Onboarder } from "./pages/onboarder/Onboarder";
-import type { Team } from "./pages/team/Team";
+import type { Onboarder } from "./pages/onboarders/Onboarder";
+import type { Team } from "./pages/teams/Team";
 
 
 export function assignOnboarders(teams: Team[], onb: Onboarder[]): Onboarder[] {

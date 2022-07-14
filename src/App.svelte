@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Onboarders from "./pages/onboarder/Onboarders.svelte";
-  import Teams from "./pages/team/Teams.svelte";
+  import Onboarders from "./pages/onboarders/Onboarders.svelte";
+  import Teams from "./pages/teams/Teams.svelte";
 
 
   type Theme = "auto" | "light" | "dark";

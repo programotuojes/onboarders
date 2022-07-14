@@ -1,4 +1,4 @@
-import type { Team } from "../team/Team";
+import type { Team } from "../teams/Team";
 
 export interface Onboarder {
   id: number;
