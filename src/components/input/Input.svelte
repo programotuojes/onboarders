@@ -97,7 +97,6 @@
   input {
     border: var(--border);
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
     height: 2.5rem;
     outline-style: none;
     padding: 0.25rem 0.75rem;

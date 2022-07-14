@@ -24,7 +24,7 @@
       {#each columns as col (col.key + row.id)}
         <td style="width: {col.width}rem">
 
-          {#if Array.isArray(row[col.key])}
+          {#if Array.isArray(row[col.key]) && row[col.key].length > 0}
 
             <ol style="padding: 0 0 0 1rem; margin: 0">
               {#each row[col.key] as team}
@@ -59,9 +59,7 @@
   /* Therefore, added borders to th and td instead */
 
   table {
-    border-radius: var(--border-radius); /* Adds box shadow to table corners */
     border-spacing: 0;
-    box-shadow: var(--box-shadow);
     margin: 2rem auto;
   }
 

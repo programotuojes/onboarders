@@ -220,7 +220,6 @@
     background-color: white;
     border: var(--border);
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
     height: 2.5rem;
     margin-top: 2rem;
     padding: 0.25rem 0.75rem;
@@ -275,17 +274,18 @@
   }
 
   ul {
-    background-color: lightgray;
-    border: var(--border);
+    background-color: white;
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    left: 0;
+    box-shadow: var(--shadow-xl);
+    left: calc(0rem - var(--border-width));
     list-style: none;
-    overflow: hidden;
-    padding: 0;
+    max-height: 14rem;
+    overflow: scroll;
+    padding: 0.5rem 0;
     position: absolute;
     top: 1.7rem;
-    width: 100%;
+    width: calc(100% + 2 * var(--border-width));
+    z-index: 1000;
   }
 
   li {
