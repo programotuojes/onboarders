@@ -1,8 +1,11 @@
 <script lang="ts">
   import { addTeams, nameOf } from "../../common";
   import Input from "../../components/input/Input.svelte";
+  import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
   import type { Column } from "../../components/table/Table.d.ts";
   import Table from "../../components/table/Table.svelte";
+  import { tags } from "../tags/store.js";
+  import type { Tag } from "../tags/Tag.d.ts";
   import { teams } from "./store.ts";
   import type { Team } from "./Team.d.ts";
 
@@ -10,7 +13,8 @@
   const defaultTeam = (): Team => ({
     id: teamId++,
     name: "",
-    slots: 1
+    slots: 1,
+    tags: [],
   });
 
   let teamId = 0;
@@ -18,10 +22,12 @@
 
   let nameNode: HTMLInputElement;
 
+  const tagDisplayProp = nameOf<Tag>("name");
   const columns: Column[] = [
     { key: nameOf<Team>("id"), title: "ID" },
     { key: nameOf<Team>("name") },
-    { key: nameOf<Team>("slots"), width: 0.1 }
+    { key: nameOf<Team>("slots"), width: 0.1 },
+    { key: nameOf<Team>("tags") },
   ];
 
   function addTeam() {
@@ -55,6 +61,13 @@
     type="number"
   />
 
+  <MultiSelect
+    bind:selected={newTeam.tags}
+    data={$tags}
+    displayProp={tagDisplayProp}
+    label="Tags"
+  />
+
   <button>Add</button>
 </form>
 
@@ -73,6 +86,6 @@
 
   button {
     height: 2rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 </style>

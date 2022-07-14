@@ -1,19 +1,16 @@
 import type { Onboarder } from "./pages/onboarders/Onboarder";
 import type { Team } from "./pages/teams/Team";
 
+export const nameOf = <T>(name: Extract<keyof T, string>): string => name;
 
 export function assignOnboarders(teams: Team[], onb: Onboarder[]): Onboarder[] {
   const onboarders = [...onb].sort((a, b) => b.rotation - a.rotation);
 
   for (let onboarder of onboarders) {
-    if (onboarder.preferences.length === 0) {
-      continue;
-    }
+    if (onboarder.preferredTeams.length === 0) continue;
 
-    const preference = onboarder.preferences.filter(x => x.slots > 0)[0];
-    if (!preference) {
-      continue;
-    }
+    const preference = onboarder.preferredTeams.filter(x => x.slots > 0)[0];
+    if (!preference) continue;
 
     onboarder.assignedTeam = preference;
     preference.slots -= 1;
@@ -23,43 +20,38 @@ export function assignOnboarders(teams: Team[], onb: Onboarder[]): Onboarder[] {
   const remainingOnboarders = onboarders.filter(x => x.assignedTeam === undefined);
 
   for (let onboarder of remainingOnboarders) {
-    if (remainingTeams.length === 0) {
-      return;
-    }
+    if (remainingTeams.length === 0) return;
 
     const assigned = remainingTeams[0];
 
     onboarder.assignedTeam = assigned;
     assigned.slots -= 1;
 
-    if (assigned.slots <= 0) {
-      remainingTeams.shift();
-    }
+    if (assigned.slots <= 0) remainingTeams.shift();
   }
 
   return onboarders;
 }
 
-
-export const nameOf = <T>(name: Extract<keyof T, string>): string => name;
-
-
 const assetWise = {
   id: -3,
   name: "AssetWise",
   slots: 2,
+  tags: [],
 };
 
 const cost = {
   id: -2,
   name: "Synchro Cost",
   slots: 1,
+  tags: [],
 };
 
 const iModel = {
   id: -1,
   name: "iModel transformations",
   slots: 3,
+  tags: [],
 };
 
 export function addTeams(): Team[] {
@@ -72,37 +64,43 @@ export function addOnboarders(): Onboarder[] {
       id: -6,
       name: "Petras Tamošiūnas",
       rotation: 1,
-      preferences: [assetWise, iModel],
+      preferredTeams: [assetWise, iModel],
+      preferredTags: [],
     },
     {
       id: -5,
       name: "Tomas Virbalas",
       rotation: 3,
-      preferences: [cost],
+      preferredTeams: [cost],
+      preferredTags: [],
     },
     {
       id: -4,
       name: "Gustas Klevinskas",
       rotation: 4,
-      preferences: [cost]
+      preferredTeams: [cost],
+      preferredTags: [],
     },
     {
       id: -3,
       name: "Lukas Lukošius",
       rotation: 3,
-      preferences: [assetWise]
+      preferredTeams: [assetWise],
+      preferredTags: [],
     },
     {
       id: -2,
       name: "Inga Lingutė",
       rotation: 2,
-      preferences: [assetWise, cost]
+      preferredTeams: [assetWise, cost],
+      preferredTags: [],
     },
     {
       id: -1,
       name: "Rokas Burokas",
       rotation: 3,
-      preferences: []
-    }
+      preferredTeams: [],
+      preferredTags: [],
+    },
   ];
 }

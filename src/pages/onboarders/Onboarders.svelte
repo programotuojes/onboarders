@@ -4,6 +4,8 @@
   import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
   import type { Column } from "../../components/table/Table.d.ts";
   import Table from "../../components/table/Table.svelte";
+  import { tags } from "../tags/store.ts";
+  import type { Tag } from "../tags/Tag.d.ts";
   import { teams } from "../teams/store.ts";
   import type { Team } from "../teams/Team.d.ts";
   import type { Onboarder } from "./Onboarder.d.ts";
@@ -12,8 +14,9 @@
   const defaultOnboarder = (): Onboarder => ({
     id: onboarderId++,
     name: "",
-    preferences: [],
-    rotation: 1
+    preferredTeams: [],
+    preferredTags: [],
+    rotation: 1,
   });
 
   let onboarderId = 0;
@@ -23,17 +26,22 @@
   let nameNode: HTMLInputElement;
 
   const teamDisplayProp: string = nameOf<Team>("name");
+  const tagDisplayProp: string = nameOf<Tag>("name");
   const columns: Column[] = [
     {
       key: nameOf<Onboarder>("id"),
-      title: "ID"
+      title: "ID",
     },
     { key: nameOf<Onboarder>("name") },
     { key: nameOf<Onboarder>("rotation") },
     {
-      key: nameOf<Onboarder>("preferences"),
-      title: "Preferred teams"
-    }
+      key: nameOf<Onboarder>("preferredTeams"),
+      title: "Teams",
+    },
+    {
+      key: nameOf<Onboarder>("preferredTags"),
+      title: "Tags",
+    },
   ];
 
   function addOnboarder() {
@@ -69,10 +77,18 @@
   />
 
   <MultiSelect
-    bind:selected={newOnboarder.preferences}
+    bind:selected={newOnboarder.preferredTeams}
     data={$teams}
     displayProp={teamDisplayProp}
     label="Preferred teams"
+    showPosition
+  />
+
+  <MultiSelect
+    bind:selected={newOnboarder.preferredTags}
+    data={$tags}
+    displayProp={tagDisplayProp}
+    label="Preferred tags"
   />
 
   <button>Add</button>
@@ -83,7 +99,7 @@
   form {
     align-items: center;
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
     justify-content: center;
 
     @media (max-width: 600px) {
@@ -94,7 +110,7 @@
 
   button {
     height: 2rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 
 </style>

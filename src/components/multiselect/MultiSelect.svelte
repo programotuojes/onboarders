@@ -12,6 +12,7 @@
   export let selected: Selection[] = [];
   export let displayProp: string = "";
   export let label: string = "";
+  export let showPosition: boolean = false;
 
 
   interface Selection {
@@ -141,7 +142,7 @@
     if (index === 11 || index === 12 || index === 13)
       postfix = "th";
 
-    return ` (${index}${postfix})`;
+    return `(${index}${postfix})`;
   }
 
   // TODO on:click|stopPropagation doesn't remove focus from li on desktop
@@ -149,6 +150,7 @@
 
 <div
   class="root"
+  class:focused={focused}
   on:click={onRootClick}
   on:keydown={onRootKeyDown}
   use:outClick={() => focused = false}
@@ -201,7 +203,10 @@
             on:keydown={onDropdownKeyDown(option)}
             class:selected={selected.includes(option)}
           >
-            {@html getUnderlined(option[displayProp])}{getOrdinal(option)}
+            {@html getUnderlined(option[displayProp])}
+            {#if showPosition}
+              {getOrdinal(option)}
+            {/if}
           </li>
         {/each}
       {/if}
@@ -217,14 +222,14 @@
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     height: 2.5rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
     padding: 0.25rem 0.75rem;
     position: relative;
     transition: border 100ms ease-in;
     width: 20rem;
 
     &:hover { border-color: gray; }
-    &:focus-within { border-color: cornflowerblue; }
+    &:focus-within, &.focused { border-color: cornflowerblue; }
   }
 
   .actions {

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Onboarders from "./pages/onboarders/Onboarders.svelte";
+  import Tags from "./pages/tags/Tags.svelte";
   import Teams from "./pages/teams/Teams.svelte";
 
 
@@ -27,6 +28,7 @@
   }
 </script>
 
+<Tags />
 <Teams />
 <Onboarders />
 
