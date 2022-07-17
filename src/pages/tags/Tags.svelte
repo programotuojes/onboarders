@@ -55,6 +55,6 @@
 
   button {
     height: 2rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 </style>

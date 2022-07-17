@@ -79,7 +79,7 @@
 <style lang="postcss">
 
   .root {
-    margin-top: 2rem;
+    margin-top: 1rem;
     position: relative;
   }
 

@@ -14,6 +14,7 @@
   const defaultOnboarder = (): Onboarder => ({
     id: onboarderId++,
     name: "",
+    previousTeams: [],
     preferredTeams: [],
     preferredTags: [],
     rotation: 1,
@@ -77,6 +78,15 @@
   />
 
   <MultiSelect
+    bind:selected={newOnboarder.previousTeams}
+    data={$teams}
+    displayProp={teamDisplayProp}
+    label="Previous teams"
+    maxSelected="3"
+    maxSelectedMessage="3 teams already selected"
+  />
+
+  <MultiSelect
     bind:selected={newOnboarder.preferredTeams}
     data={$teams}
     displayProp={teamDisplayProp}
@@ -100,17 +110,13 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
     justify-content: center;
-
-    @media (max-width: 600px) {
-      align-items: center;
-      flex-direction: column;
-    }
   }
 
   button {
     height: 2rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
 </style>

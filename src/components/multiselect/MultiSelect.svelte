@@ -6,6 +6,7 @@
   import { fly } from "svelte/transition";
   import { outClick, outFocus } from "./actions.ts";
   import { Key } from "./Key.d.ts";
+  import { toasts } from "../toast/store.ts";
 
 
   export let data: Selection[] = [];
@@ -13,6 +14,8 @@
   export let displayProp: string = "";
   export let label: string = "";
   export let showPosition: boolean = false;
+  export let maxSelected: number | undefined = undefined;
+  export let maxSelectedMessage: string = "Max amount selected";
 
 
   interface Selection {
@@ -60,9 +63,19 @@
   }
 
   const select = (obj: Selection) => () => {
+    const selectedPreviously: boolean = selected.includes(obj);
+
+    if (!selectedPreviously &&
+        maxSelected !== undefined &&
+        selected.length >= maxSelected) {
+      toasts.push(maxSelectedMessage, { level: "warning" });
+      (document.activeElement as HTMLElement).blur();
+      return;
+    }
+
     inputValue = "";
 
-    if (!selected.includes(obj))
+    if (!selectedPreviously)
       selected = [...selected, obj];
     else
       selected = selected.filter(x => x !== obj);
@@ -221,7 +234,7 @@
     border: var(--border);
     border-radius: var(--border-radius);
     height: 2.5rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding: 0.25rem 0.75rem;
     position: relative;
     transition: border 100ms ease-in;
@@ -280,7 +293,8 @@
     left: calc(0rem - var(--border-width));
     list-style: none;
     max-height: 14rem;
-    overflow: scroll;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 0.5rem 0;
     position: absolute;
     top: 1.7rem;
