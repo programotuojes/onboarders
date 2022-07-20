@@ -1,10 +1,10 @@
 <script lang="ts">
   import { nameOf } from "../../common";
   import Input from "../../components/input/Input.svelte";
-  import type { Column } from "../../components/table/Table.d.ts";
+  import type { Column } from "../../components/table/table.d.ts";
   import Table from "../../components/table/Table.svelte";
   import { tags } from "./store.ts";
-  import type { Tag } from "./Tag.d.ts";
+  import type { Tag } from "./tag.d.ts";
 
 
   const columns: Column[] = [

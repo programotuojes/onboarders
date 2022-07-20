@@ -4,8 +4,8 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { InputType } from "./Input.d.ts";
-  import { hasMinMax } from "./Input.d.ts";
+  import type { InputType } from "./input.d.ts";
+  import { hasMinMax } from "./input.d.ts";
 
 
   export let value: string | number = "";

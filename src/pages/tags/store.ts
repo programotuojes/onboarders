@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { Tag } from "./Tag";
+import type { Tag } from "./tag";
 
 
 export const tags = writable<Tag[]>([]);

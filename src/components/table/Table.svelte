@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import type { Column } from "./Table.d.ts";
+  import type { Column } from "./table.d.ts";
 
 
   export let rows: Object[] = [];

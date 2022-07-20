@@ -2,18 +2,19 @@
   import { addTeams, nameOf } from "../../common";
   import Input from "../../components/input/Input.svelte";
   import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
-  import type { Column } from "../../components/table/Table.d.ts";
+  import type { Column } from "../../components/table/table.d.ts";
   import Table from "../../components/table/Table.svelte";
   import { tags } from "../tags/store.js";
-  import type { Tag } from "../tags/Tag.d.ts";
+  import type { Tag } from "../tags/tag.d.ts";
   import { teams } from "./store.ts";
-  import type { Team } from "./Team.d.ts";
+  import type { Team } from "./team.d.ts";
 
 
   const defaultTeam = (): Team => ({
     id: teamId++,
     name: "",
     slots: 1,
+    remainingSlots: 1,
     tags: [],
   });
 
@@ -31,6 +32,7 @@
   ];
 
   function addTeam() {
+    newTeam.remainingSlots = newTeam.slots;
     $teams = [...$teams, newTeam];
     newTeam = defaultTeam();
 
@@ -39,7 +41,7 @@
   }
 
   function mock() {
-    $teams = addTeams();
+    // $teams = addTeams();
   }
 </script>
 

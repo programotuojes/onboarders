@@ -1,5 +1,6 @@
-import type { Onboarder } from "./pages/onboarders/Onboarder";
-import type { Team } from "./pages/teams/Team";
+import type { Onboarder } from "./pages/onboarders/onboarder";
+import type { Team } from "./pages/teams/team";
+
 
 export const nameOf = <T>(name: Extract<keyof T, string>): string => name;
 
@@ -37,6 +38,7 @@ const assetWise = {
   id: -3,
   name: "AssetWise",
   slots: 2,
+  remainingSlots: 2,
   tags: [],
 };
 
@@ -44,6 +46,7 @@ const cost = {
   id: -2,
   name: "Synchro Cost",
   slots: 1,
+  remainingSlots: 1,
   tags: [],
 };
 
@@ -51,6 +54,7 @@ const iModel = {
   id: -1,
   name: "iModel transformations",
   slots: 3,
+  remainingSlots: 3,
   tags: [],
 };
 
@@ -64,6 +68,7 @@ export function addOnboarders(): Onboarder[] {
       id: -6,
       name: "Petras Tamošiūnas",
       rotation: 1,
+      priority: 0,
       previousTeams: [],
       preferredTeams: [assetWise, iModel],
       preferredTags: [],
@@ -72,6 +77,7 @@ export function addOnboarders(): Onboarder[] {
       id: -5,
       name: "Tomas Virbalas",
       rotation: 3,
+      priority: 2,
       previousTeams: [],
       preferredTeams: [cost],
       preferredTags: [],
@@ -80,6 +86,7 @@ export function addOnboarders(): Onboarder[] {
       id: -4,
       name: "Gustas Klevinskas",
       rotation: 4,
+      priority: 1,
       previousTeams: [],
       preferredTeams: [cost],
       preferredTags: [],
@@ -88,6 +95,7 @@ export function addOnboarders(): Onboarder[] {
       id: -3,
       name: "Lukas Lukošius",
       rotation: 3,
+      priority: 0,
       previousTeams: [],
       preferredTeams: [assetWise],
       preferredTags: [],
@@ -96,6 +104,7 @@ export function addOnboarders(): Onboarder[] {
       id: -2,
       name: "Inga Lingutė",
       rotation: 2,
+      priority: 0,
       previousTeams: [],
       preferredTeams: [assetWise, cost],
       preferredTags: [],
@@ -104,6 +113,7 @@ export function addOnboarders(): Onboarder[] {
       id: -1,
       name: "Rokas Burokas",
       rotation: 3,
+      priority: 0,
       previousTeams: [],
       preferredTeams: [],
       preferredTags: [],

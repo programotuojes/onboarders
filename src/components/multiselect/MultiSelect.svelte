@@ -5,7 +5,7 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
   import { outClick, outFocus } from "./actions.ts";
-  import { Key } from "./Key.d.ts";
+  import { Key } from "./key.d.ts";
   import { toasts } from "../toast/store.ts";
 
 

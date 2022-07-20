@@ -2,13 +2,14 @@
   import { addOnboarders, nameOf } from "../../common.ts";
   import Input from "../../components/input/Input.svelte";
   import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
-  import type { Column } from "../../components/table/Table.d.ts";
+  import type { Column } from "../../components/table/table.d.ts";
   import Table from "../../components/table/Table.svelte";
   import { tags } from "../tags/store.ts";
-  import type { Tag } from "../tags/Tag.d.ts";
+  import type { Tag } from "../tags/tag.d.ts";
   import { teams } from "../teams/store.ts";
-  import type { Team } from "../teams/Team.d.ts";
-  import type { Onboarder } from "./Onboarder.d.ts";
+  import type { Team } from "../teams/team.d.ts";
+  import type { Onboarder } from "./onboarder.d.ts";
+  import { onboarders } from "./store.ts";
 
 
   const defaultOnboarder = (): Onboarder => ({
@@ -18,11 +19,11 @@
     preferredTeams: [],
     preferredTags: [],
     rotation: 1,
+    priority: 0,
   });
 
   let onboarderId = 0;
   let newOnboarder: Onboarder = defaultOnboarder();
-  let onboarders: Onboarder[] = [];
 
   let nameNode: HTMLInputElement;
 
@@ -35,6 +36,7 @@
     },
     { key: nameOf<Onboarder>("name") },
     { key: nameOf<Onboarder>("rotation") },
+    { key: nameOf<Onboarder>("priority") },
     {
       key: nameOf<Onboarder>("preferredTeams"),
       title: "Teams",
@@ -46,7 +48,7 @@
   ];
 
   function addOnboarder() {
-    onboarders = [...onboarders, newOnboarder];
+    $onboarders = [...$onboarders, newOnboarder];
     newOnboarder = defaultOnboarder();
 
     // TODO don't focus if an onscreen keyboard can be shown (e.g. mobile)
@@ -54,13 +56,13 @@
   }
 
   function mock() {
-    onboarders = addOnboarders();
+    // $onboarders = addOnboarders();
   }
 </script>
 
 <h1 on:click={mock} style="text-align: center">Onboarders</h1>
 
-<Table {columns} rows={onboarders} style="width: 80vw" />
+<Table {columns} rows={$onboarders} style="width: 80vw" />
 
 <form on:submit|preventDefault={addOnboarder}>
   <Input
@@ -74,6 +76,14 @@
     label="Rotation"
     max="4"
     min="1"
+    type="number"
+  />
+
+  <Input
+    bind:value={newOnboarder.priority}
+    label="Priority"
+    max="9"
+    min="0"
     type="number"
   />
 

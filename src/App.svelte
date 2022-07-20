@@ -1,8 +1,16 @@
 <script lang="ts">
+  import { assignTeams } from "./calculation.ts";
+  import { nameOf } from "./common";
+  import type { Column } from "./components/table/table.d.ts";
+  import Table from "./components/table/Table.svelte";
   import { toasts } from "./components/toast/store.ts";
   import Toast from "./components/toast/Toast.svelte";
+  import type { Onboarder } from "./pages/onboarders/onboarder.d.ts";
   import Onboarders from "./pages/onboarders/Onboarders.svelte";
+  import { onboarders } from "./pages/onboarders/store.ts";
   import Tags from "./pages/tags/Tags.svelte";
+  import { teams } from "./pages/teams/store.ts";
+  import type { Team } from "./pages/teams/team";
   import Teams from "./pages/teams/Teams.svelte";
 
 
@@ -27,11 +35,31 @@
         break;
     }
   }
+
+  const columns: Column[] = [
+    { key: nameOf<Onboarder>("name") },
+    { key: nameOf<Onboarder>("assignedTeam"), displayFunc: (team: Team) => team.name },
+  ];
+  let assignedOnboarders: Onboarder[] | undefined;
+
+  function assign() {
+    assignedOnboarders = assignTeams($onboarders, $teams);
+  }
+
 </script>
 
 <Tags />
 <Teams />
 <Onboarders />
+
+<button
+  class="assign"
+  on:click={assign}
+>
+  Assign
+</button>
+
+<Table {columns} rows={assignedOnboarders} />
 
 <div class="toast-container">
   {#each $toasts as toast (toast.id)}
@@ -39,25 +67,6 @@
   {/each}
 </div>
 
-
-<button
-  on:click={() => toasts.push("Test", {level: "info"})}
-  style="position: fixed; right: 0; bottom: 0; margin: 1rem; padding: 0.5rem"
->
-  Show info
-</button>
-<button
-  on:click={() => toasts.push("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur risus eu lacus convallis.", {level: "warning", duration: 9000})}
-  style="position: fixed; right: 0; bottom: 3rem; margin: 1rem; padding: 0.5rem"
->
-  Show warning
-</button>
-<button
-  on:click={() => toasts.push("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur risus eu lacus convallis.", {level: "error"})}
-  style="position: fixed; right: 0; bottom: 6rem; margin: 1rem; padding: 0.5rem"
->
-  Show error
-</button>
 
 <label for="theme">Theme:</label>
 <select bind:value id="theme" on:change={changeTheme}>
@@ -80,6 +89,14 @@
     left: 0;
     margin: 1rem;
     position: fixed;
+  }
+
+  .assign {
+    background-color: wheat;
+    display: block;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    width: 10rem;
   }
 
   .toast-container {
