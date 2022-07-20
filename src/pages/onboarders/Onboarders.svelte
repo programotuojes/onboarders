@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addOnboarders, nameOf } from "../../common.ts";
+  import { nameOf } from "../../common.ts";
   import Input from "../../components/input/Input.svelte";
   import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
   import type { Column } from "../../components/table/table.d.ts";
@@ -30,10 +30,6 @@
   const teamDisplayProp: string = nameOf<Team>("name");
   const tagDisplayProp: string = nameOf<Tag>("name");
   const columns: Column[] = [
-    {
-      key: nameOf<Onboarder>("id"),
-      title: "ID",
-    },
     { key: nameOf<Onboarder>("name") },
     { key: nameOf<Onboarder>("rotation") },
     { key: nameOf<Onboarder>("priority") },
@@ -54,15 +50,11 @@
     // TODO don't focus if an onscreen keyboard can be shown (e.g. mobile)
     nameNode.focus();
   }
-
-  function mock() {
-    // $onboarders = addOnboarders();
-  }
 </script>
 
-<h1 on:click={mock} style="text-align: center">Graduates</h1>
+<h1 style="text-align: center">Graduates</h1>
 
-<Table {columns} rows={$onboarders} style="width: 80vw" />
+<Table {columns} rows={$onboarders} />
 
 <form on:submit|preventDefault={addOnboarder}>
   <Input

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addTeams, nameOf } from "../../common";
+  import { nameOf } from "../../common";
   import Input from "../../components/input/Input.svelte";
   import MultiSelect from "../../components/multiselect/MultiSelect.svelte";
   import type { Column } from "../../components/table/table.d.ts";
@@ -25,9 +25,8 @@
 
   const tagDisplayProp = nameOf<Tag>("name");
   const columns: Column[] = [
-    { key: nameOf<Team>("id"), title: "ID" },
     { key: nameOf<Team>("name") },
-    { key: nameOf<Team>("slots"), width: 0.1 },
+    { key: nameOf<Team>("slots") },
     { key: nameOf<Team>("tags") },
   ];
 
@@ -39,15 +38,11 @@
     // TODO don't focus if an onscreen keyboard can be shown (e.g. mobile)
     nameNode.focus();
   }
-
-  function mock() {
-    // $teams = addTeams();
-  }
 </script>
 
-<h1 on:click={mock} style="text-align: center">Teams</h1>
+<h1 style="text-align: center">Teams</h1>
 
-<Table {columns} rows={$teams} style="width: 80vw" />
+<Table {columns} rows={$teams} />
 
 <form on:submit|preventDefault={addTeam}>
   <Input
