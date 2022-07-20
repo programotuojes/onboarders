@@ -38,7 +38,11 @@
 
   const columns: Column[] = [
     { key: nameOf<Onboarder>("name") },
-    { key: nameOf<Onboarder>("assignedTeam"), displayFunc: (team: Team) => team.name },
+    {
+      key: nameOf<Onboarder>("assignedTeam"),
+      title: "Assigned team",
+      displayFunc: (team: Team) => team.name,
+    },
   ];
   let assignedOnboarders: Onboarder[] | undefined;
 
@@ -52,14 +56,11 @@
 <Teams />
 <Onboarders />
 
-<button
-  class="assign"
-  on:click={assign}
->
-  Assign
-</button>
+<hr/>
 
+<h1 style="text-align: center">Results</h1>
 <Table {columns} rows={assignedOnboarders} />
+<button class="assign" on:click={assign}>Assign</button>
 
 <div class="toast-container">
   {#each $toasts as toast (toast.id)}
@@ -109,6 +110,13 @@
     padding: 0;
     position: fixed;
     transform: translateX(-50%);
+  }
+
+  hr {
+    margin-top: 2rem;
+    height: 0.1rem;
+    border: none;
+    background-color: rgba(0 0 0 / 0.2);
   }
 
 </style>

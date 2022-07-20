@@ -2,6 +2,7 @@ import type { Onboarder } from "./pages/onboarders/onboarder";
 import type { Team } from "./pages/teams/team";
 
 
+// TODO show toast on errors
 export function assignTeams(onboarders: Onboarder[], teams: Team[]): Onboarder[] {
   const teamSlots = teams.map(x => x.slots).reduce((acc, slots) => acc + slots, 0);
 
@@ -14,7 +15,7 @@ export function assignTeams(onboarders: Onboarder[], teams: Team[]): Onboarder[]
   const sorted = [...onboarders].sort((a, b) => getWeight(b) - getWeight(a));
 
   for (const onboarder of sorted) {
-    const availableTeams = onboarder.preferredTeams.filter(x => x.remainingSlots > 0);
+    const availableTeams = onboarder.preferredTeams.filter(x => x.remainingSlots > 0 && !onboarder.previousTeams.includes(x));
 
     if (availableTeams.length > 0) {
       onboarder.assignedTeam = availableTeams[0];
@@ -25,16 +26,19 @@ export function assignTeams(onboarders: Onboarder[], teams: Team[]): Onboarder[]
     assignByTags(onboarder, teams);
   }
 
-  const remainingTeams = teams.filter(x => x.remainingSlots > 0);
+  const remainingOnboarders = sorted.filter(x => x.assignedTeam === undefined);
 
-  for (const onboarder of sorted.filter(x => x.assignedTeam === undefined)) {
-    const team = remainingTeams[0];
+  for (const onboarder of remainingOnboarders) {
+    const availableTeams = teams.filter(x => x.remainingSlots > 0 && !onboarder.previousTeams.includes(x));
 
-    onboarder.assignedTeam = team;
-    team.remainingSlots -= 1;
+    if (availableTeams.length === 0) {
+      console.log("Onboarder", onboarder);
+      console.log("Teams", teams);
+      throw new Error("Can't assign onboarder to a team");
+    }
 
-    if (team.remainingSlots === 0)
-      remainingTeams.shift();
+    onboarder.assignedTeam = availableTeams[0];
+    availableTeams[0].remainingSlots -= 1;
   }
 
   return onboarders;

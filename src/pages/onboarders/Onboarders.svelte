@@ -60,7 +60,7 @@
   }
 </script>
 
-<h1 on:click={mock} style="text-align: center">Onboarders</h1>
+<h1 on:click={mock} style="text-align: center">Graduates</h1>
 
 <Table {columns} rows={$onboarders} style="width: 80vw" />
 
